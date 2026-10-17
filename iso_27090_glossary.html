@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISO/IEC 27090:2026 術語對照與導讀｜第 3 章 30 條定義解析</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --secondary: #0f766e;
+      --secondary-light: #f0fdfa;
+      --text: #1f2937;
+      --text-muted: #4b5563;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --warning-border: #f59e0b;
+      --warning-bg: #fffbeb;
+      --tag-bg: #e0e7ff;
+      --tag-text: #3730a3;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", "Noto Sans TC", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      padding-bottom: 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .toc-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 10px 16px;
+      background: rgba(248, 250, 252, 0.94);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+    .toc-nav::-webkit-scrollbar { display: none; }
+    .toc-nav a {
+      flex: none; padding: 6px 14px; border-radius: 9999px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none;
+      color: var(--primary); background: var(--primary-light); border: 1px solid #dbeafe;
+    }
+    .toc-nav a:hover { background: #bfdbfe; }
+    .container { max-width: 860px; margin: 20px auto 0; padding: 0 16px; }
+    header, section {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm);
+    }
+    .meta-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .tag { font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 9999px; background: var(--tag-bg); color: var(--tag-text); }
+    h1 { font-size: 1.55rem; line-height: 1.4; color: var(--primary); margin-bottom: 8px; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); scroll-margin-top: 64px; }
+    h3 { font-size: 1.02rem; color: var(--secondary); margin: 18px 0 6px; }
+    p { margin-bottom: 12px; }
+    .lead { color: var(--text-muted); }
+    ul, ol { margin: 0 0 12px 1.4em; }
+    li { margin-bottom: 6px; }
+    .callout { border-left: 4px solid var(--warning-border); background: var(--warning-bg); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 0.95rem; }
+    .callout.info { border-left-color: var(--secondary); background: var(--secondary-light); }
+
+    /* 分類地圖 */
+    .map { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0; }
+    .map a { display: block; text-decoration: none; color: inherit; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; background: var(--bg); }
+    .map a:hover { border-color: var(--primary); }
+    .map b { display: block; color: var(--primary); }
+    .map small { color: var(--text-muted); }
+
+    /* 搜尋 */
+    .search { width: 100%; padding: 10px 14px; font-size: 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; font-family: inherit; }
+    .search:focus { outline: 2px solid var(--primary); border-color: transparent; }
+    .count { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+
+    /* 術語卡 */
+    .term { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: #fff; }
+    .term[hidden] { display: none; }
+    .term-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 10px; margin-bottom: 6px; }
+    .no { font-size: 0.78rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--primary); color: #fff; }
+    .en { font-weight: 700; font-size: 1.02rem; }
+    .zh { color: var(--secondary); font-weight: 600; }
+    .alias { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; }
+    .term p { margin-bottom: 6px; font-size: 0.95rem; }
+    .src { font-size: 0.8rem; color: var(--text-muted); }
+    .use { font-size: 0.9rem; background: var(--primary-light); border-radius: 6px; padding: 6px 10px; margin-top: 6px; }
+
+    /* 對照表（橫滑容器，避免手機擠壓） */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: 8px; }
+    table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.9rem; }
+    th, td { padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: var(--primary-light); color: var(--primary); }
+    .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+    footer { max-width: 860px; margin: 0 auto; padding: 0 16px; font-size: 0.85rem; color: var(--text-muted); }
+    @media (max-width: 480px) {
+      header, section { padding: 18px 16px; }
+      h1 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="toc-nav" aria-label="章節導覽">
+  <a href="#guide">導讀</a>
+  <a href="#intro">標準介紹</a>
+  <a href="#map">分類地圖</a>
+  <a href="#glossary">術語對照</a>
+  <a href="#insights">閱讀心得</a>
+  <a href="#notice">範圍與聲明</a>
+</nav>
+
+<div class="container">
+
+<header>
+  <div class="meta-tags">
+    <span class="tag">ISO/IEC 27090:2026</span>
+    <span class="tag">第 3 章 Terms and definitions</span>
+    <span class="tag">30 條術語</span>
+  </div>
+  <h1>ISO/IEC 27090 術語對照與導讀</h1>
+  <p class="lead">先把用語讀對，再讀標準。本頁整理第 3 章 3.1 至 3.30 全部術語：英中對照、白話意譯、條號與出處，並說明它們如何構成整份標準的威脅語言。</p>
+</header>
+
+<section id="guide">
+  <h2>導讀：為什麼要先讀術語</h2>
+  <p>AI 資安文章常把「攻擊」講得很含糊：資料中毒、模型中毒、後門、提示詞注入，經常被混為一談。ISO/IEC 27090 的第 3 章等於替這些說法立了規矩：<strong>誰在攻擊、知道多少、打哪個資產、傷到 CIA 的哪一項</strong>，都有各自的用語。</p>
+  <p>讀這一章有三個好處：</p>
+  <ol>
+    <li><strong>統一語言</strong>：跟顧問、稽核員、廠商溝通時，「model exfiltration」與「model inversion」是不同的事，不會講到一半各說各話。</li>
+    <li><strong>看懂後面的章節</strong>：第 5 章起的威脅與緩解措施，都建立在這 30 條用語上。</li>
+    <li><strong>辨別話術</strong>：知道標準怎麼定義，就能分辨市面文章有沒有把概念講過頭。</li>
+  </ol>
+  <div class="callout info"><strong>建議讀法：</strong>先看下方「分類地圖」建立整體印象，再用搜尋框查個別術語；3.10 至 3.19 與 3.23 是最常被引用的攻擊詞彙，值得優先讀。</div>
+</section>
+
+<section id="intro">
+  <h2>標準介紹：它是什麼、不是什麼</h2>
+  <p>ISO/IEC 27090:2026 的正式名稱是《Cybersecurity — Artificial intelligence (AI) — Addressing security threats and compromises to AI systems》，由 ISO/IEC JTC 1/SC 27 制定。</p>
+  <ul>
+    <li><strong>範圍（第 1 章）</strong>：處理 AI 系統<em>特有</em>的資安威脅與入侵，說明威脅的後果，以及如何偵測與緩解。涵蓋 AI 系統整個生命週期。</li>
+    <li><strong>適用對象</strong>：開發或使用 AI 系統的各類型、各規模組織，包括公司、政府機關與非營利組織。</li>
+    <li><strong>定位</strong>：序言（Introduction）明講這是給組織的<em>指引</em>。它建議沿用 ISO/IEC 27001、27002 的既有做法，AI 特有的威脅是在這個基礎上「加層」，並不取代傳統資安。</li>
+    <li><strong>引用標準（第 2 章）</strong>：ISO/IEC 22989（AI 概念與術語）與 ISO/IEC 23053:2022（ML 型 AI 系統框架）。第 3 章也先指向這兩份文件的術語。</li>
+  </ul>
+  <p>序言還點出兩個重要觀念：其一，資料中毒不一定只發生在訓練階段，持續學習的系統在運作時收進來的資料，也可能變成下一輪的訓練資料；其二，模型被竊取可以只靠「合法查詢」完成，所以傳統的存取控制、限流不夠，需要額外的偵測。</p>
+</section>
+
+<section id="map">
+  <h2>分類地圖</h2>
+  <p>第 3 章的編號是依字母或引用順序排的，不是依主題。為了好讀，我把 30 條重新分成六組：</p>
+  <div class="map">
+    <a href="#g1"><b>① 資安基本語彙</b><small>3.1 至 3.3：CIA 三要素</small></a>
+    <a href="#g2"><b>② 威脅語言</b><small>3.4 至 3.9：威脅、攻擊、攻擊者、失效、緩解、弱點</small></a>
+    <a href="#g3"><b>③ 攻擊者知識程度</b><small>3.10 至 3.12：零知識、完全知識、部分知識</small></a>
+    <a href="#g4"><b>④ AI 攻擊類型</b><small>3.13 至 3.19、3.23、3.24：中毒、規避、推斷、竊取、注入、後門</small></a>
+    <a href="#g5"><b>⑤ 洩漏類型</b><small>3.20 至 3.22：訓練資料、輸入、輸出</small></a>
+    <a href="#g6"><b>⑥ AI 與環境概念</b><small>3.25 至 3.30：來源、OOD、基礎模型、LLM、生成式 AI、TEE</small></a>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>攻擊類型</th><th>對象</th><th>主要傷到</th><th>條號</th></tr></thead>
+      <tbody>
+        <tr><td>資料中毒</td><td>訓練資料</td><td>完整性</td><td>3.13</td></tr>
+        <tr><td>直接模型中毒</td><td>模型本身</td><td>完整性</td><td>3.18</td></tr>
+        <tr><td>規避（對抗性）</td><td>推論時的輸入</td><td>完整性</td><td>3.14</td></tr>
+        <tr><td>提示詞注入</td><td>送進系統的指令內容</td><td>完整性（可連帶機密性）</td><td>3.23</td></tr>
+        <tr><td>成員推斷</td><td>某筆資料是否在訓練集</td><td>機密性</td><td>3.15</td></tr>
+        <tr><td>模型反轉</td><td>重建訓練資料</td><td>機密性</td><td>3.17</td></tr>
+        <tr><td>模型外洩（萃取）</td><td>以查詢複製模型功能</td><td>機密性（智財）</td><td>3.16</td></tr>
+        <tr><td>直接模型竊取</td><td>模型參數</td><td>機密性</td><td>3.19</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="hint">← 手機可左右滑動表格。「主要傷到」欄是我依各條定義的語意所做的歸納，標準本身不是這樣列表。</p>
+</section>
+
+<section id="glossary">
+  <h2>術語對照（3.1 至 3.30）</h2>
+  <input class="search" id="q" type="search" placeholder="搜尋英文、中文或條號，例如 poisoning、模型、3.16" aria-label="搜尋術語">
+  <div class="count" id="count">顯示 30 / 30 條</div>
+
+  <h3 id="g1">① 資安基本語彙</h3>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.1</span><span class="en">availability</span><span class="zh">可用性</span></div>
+    <p>被授權的使用者需要時，就能存取並使用，系統與資訊「用得到」。</p>
+    <div class="src">出處：ISO/IEC 27000:2026, 3.4</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.2</span><span class="en">confidentiality</span><span class="zh">機密性</span></div>
+    <p>資訊不會被未經授權的個人、實體或程序取得或揭露。</p>
+    <div class="src">出處：ISO/IEC 27000:2026, 3.2</div>
+    <div class="use">後面 3.20 至 3.22 的洩漏類術語，都是在講機密性被破壞。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.3</span><span class="en">integrity</span><span class="zh">完整性</span></div>
+    <p>資訊的正確性與完整性，沒有被不當竄改或缺漏。</p>
+    <div class="src">出處：ISO/IEC 27000:2026, 3.3</div>
+    <div class="use">資料中毒、模型中毒、規避攻擊，本質上都是在攻擊完整性。</div>
+  </div>
+
+  <h3 id="g2">② 威脅語言</h3>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.4</span><span class="en">threat</span><span class="zh">威脅</span></div>
+    <p>可能造成意外事件、進而傷害系統或組織的潛在原因。重點在「潛在」，還沒發生。</p>
+    <div class="src">出處：ISO/IEC 27002:2022, 3.1.34</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.5</span><span class="en">attack</span><span class="zh">攻擊</span></div>
+    <p>未經授權、意圖破壞、改動、癱瘓、取得資產，或竊取、濫用資產的嘗試。<strong>成功與否都算</strong>。</p>
+    <div class="src">出處：ISO/IEC 27002:2022, 3.1.3</div>
+    <div class="use">第 3.10 至 3.19 以及 3.23 的定義，都是以「攻擊」這個詞為基礎延伸。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.6</span><span class="en">attacker</span><span class="zh">攻擊者</span></div>
+    <p>刻意利用技術性與非技術性控制的弱點，以竊取或危害資訊系統與網路、或讓合法使用者無法使用的人。</p>
+    <div class="src">出處：ISO/IEC 27033-1:2015, 3.3</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.7</span><span class="en">failure</span><span class="zh">失效</span></div>
+    <p>產品無法再執行所需功能，或無法在事先規定的限度內運作。</p>
+    <div class="src">出處：ISO/IEC 25030:2007, A.20；該定義源自 IEEE 610.12-1990</div>
+    <div class="use">序言提到弱點與缺乏控制可能導致 failure，影響個人與企業。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.8</span><span class="en">mitigation</span><span class="zh">緩解</span></div>
+    <p>降低某個事件造成的負面後果。注意它的重點是「減輕後果」，不等於完全防止。</p>
+    <div class="src">出處：ISO 22300:2025, 3.1.47</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.9</span><span class="en">vulnerability</span><span class="zh">弱點</span></div>
+    <p>資產或控制措施中，可能被一個或多個威脅（3.4）利用的缺陷。</p>
+    <div class="src">出處：ISO/IEC 27002:2022, 3.1.38</div>
+  </div>
+
+  <h3 id="g3">③ 攻擊者知識程度</h3>
+  <p class="lead">這三條描述「攻擊者事先知道多少」，是 AI 攻擊分析的標準切法：黑箱、灰箱、白箱。</p>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.10</span><span class="en">zero-knowledge attack</span><span class="zh">零知識攻擊</span></div>
+    <p>假設攻擊者完全不知道目標系統內部資訊的攻擊。攻擊者可利用背景或歷史資訊推測模型弱點，也可以探測系統找出弱點。</p>
+    <div class="use">大致相當於業界常說的黑箱（black-box）情境。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.11</span><span class="en">perfect-knowledge attack</span><span class="zh">完全知識攻擊</span></div>
+    <p>假設攻擊者完全了解系統內部資訊的攻擊。對 AI 系統而言，可能包括內部架構、變數或模型目前狀態。<strong>不假設攻擊者握有憑證</strong>。</p>
+    <div class="use">大致相當於白箱（white-box）情境。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.12</span><span class="en">partial-knowledge attack</span><span class="zh">部分知識攻擊</span></div>
+    <p>假設攻擊者只掌握部分內部資訊的攻擊，同樣不假設有憑證。</p>
+    <div class="use">大致相當於灰箱（gray-box）情境。</div>
+  </div>
+
+  <h3 id="g4">④ AI 攻擊類型</h3>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.13</span><span class="en">data poisoning attack</span><span class="zh">資料中毒攻擊</span></div>
+    <p>攻擊者操縱資料，藉此影響 AI 系統的行為。</p>
+    <div class="use">對象是「資料」。要和 3.18 的直接模型中毒區分：後者是直接動模型。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.14</span><span class="en">evasion attack</span><span class="zh">規避攻擊</span></div>
+    <div class="alias">同義詞：adversarial attack（對抗性攻擊）</div>
+    <p>攻擊者改動輸入，誘使 AI 系統對該輸入做出錯誤行為。附註指出，這些改動可能人眼看不出來。</p>
+    <div class="use">發生在推論階段，不動訓練資料或模型。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.15</span><span class="en">membership inference</span><span class="zh">成員推斷</span></div>
+    <div class="alias">同義詞：membership inference attack</div>
+    <p>攻擊者想判斷「某一筆特定資料，當初有沒有被拿去訓練這個模型」。</p>
+    <div class="use">洩漏的是「某人的資料在不在訓練集」這個事實，可能涉及隱私。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.16</span><span class="en">model exfiltration attack</span><span class="zh">模型外洩攻擊（模型萃取）</span></div>
+    <div class="alias">同義詞：model exfiltration、model stealing attack、model extraction attack</div>
+    <p>攻擊者反覆送入自己準備的輸入、觀察輸出，藉此重建一個功能與原模型相近的模型。</p>
+    <div class="use">關鍵是靠「合法查詢」完成，沒有繞過存取控制。序言也提到這點。與 3.19 對照看最清楚。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.17</span><span class="en">model inversion</span><span class="zh">模型反轉</span></div>
+    <div class="alias">同義詞：model inversion attack</div>
+    <p>攻擊者向系統送入輸入、觀察輸出，藉此重建原始訓練資料，或其中相當大的一部分。</p>
+    <div class="use">與 3.15 的差別：成員推斷只回答「在不在」，模型反轉要「還原內容」。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.18</span><span class="en">direct model poisoning</span><span class="zh">直接模型中毒</span></div>
+    <div class="alias">同義詞：direct model poisoning attack</div>
+    <p>攻擊者在開發或運作期間，直接操縱模型，以影響 AI 系統行為。</p>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.19</span><span class="en">direct model theft</span><span class="zh">直接模型竊取</span></div>
+    <p>攻擊者從 AI 系統取得機密的模型參數。</p>
+    <div class="use">「直接」拿到參數。與 3.16 靠查詢複製功能不同；後者並未取得原參數。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.23</span><span class="en">prompt injection attack</span><span class="zh">提示詞注入攻擊</span></div>
+    <div class="alias">同義詞：prompt injection</div>
+    <p>攻擊者構造內容，使其作為輸入指令、或被併入輸入指令中提供給 AI 系統，觸發系統建立者不希望出現的行為。</p>
+    <div class="use">定義寫的是「提供或併入」，所以不論使用者直接輸入，或夾帶在系統讀取的外部內容裡，都涵蓋在內。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.24</span><span class="en">backdoor attack</span><span class="zh">後門攻擊</span></div>
+    <p>標準給的是通用資安定義：一種未文件化的途徑，能繞過所有已實施的安全措施，取得對應用程式、系統或網路的未授權存取。</p>
+    <div class="use">注意：這條寫得是傳統資安的後門。業界常談的「訓練時植入觸發器的模型後門」，標準這條並未專門界定。</div>
+  </div>
+
+  <h3 id="g5">⑤ 洩漏類型</h3>
+  <p class="lead">以下三條都是機密性（3.2）受損，差別在於「洩漏的是什麼、從哪裡漏」。</p>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.20</span><span class="en">direct training data leak</span><span class="zh">直接訓練資料洩漏</span></div>
+    <p>訓練資料的機密性被破壞。</p>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.21</span><span class="en">model input leak</span><span class="zh">模型輸入洩漏</span></div>
+    <p>系統運作期間，送進模型的資料其機密性被破壞。</p>
+    <div class="use">例如使用者輸入的內容被外洩。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.22</span><span class="en">sensitive model output</span><span class="zh">敏感模型輸出</span></div>
+    <p>模型輸出把先前輸入中的某部分（例如訓練資料或使用者提示詞）洩漏出來，造成機密性受損。</p>
+  </div>
+
+  <h3 id="g6">⑥ AI 與環境概念</h3>
+
+  <div class="term">
+    <div class="term-head"><span class="no">3.25</span><span class="en">data provenance</span><span class="zh">資料來源與溯源</span></div>
+    <p>關於資料集的出處、產生時間與地點、真實性證明，或歷來與現任擁有者的紀錄。</p>
+    <div class="src">出處：ISO/IEC 5259-1:2024, 3.1.6</div>
+    <div class="use">對抗資料中毒的基礎。不知道資料從哪來，就很難判斷它可不可信。</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.26</span><span class="en">out-of-distribution data (OOD data)</span><span class="zh">分布外資料</span></div>
+    <p>與 AI 任務相關、但在訓練集中缺席或代表性不足的特徵所組成的資料，可能導致 AI 出錯。附註說明，模型遇到這類輸入時缺乏處理經驗，預測可能不準確或不可靠。</p>
+    <div class="src">出處：ISO/PAS 8800:2024, 3.2.8</div>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.27</span><span class="en">foundation model</span><span class="zh">基礎模型</span></div>
+    <p>可用於、或容易調整後用於一個或多個領域中各種任務的 AI 模型。附註指出，典型做法是對大量資料進行監督式或自監督式學習，且不一定涉及生成式 AI。</p>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.28</span><span class="en">large language model (LLM)</span><span class="zh">大型語言模型</span></div>
+    <p>以大量參數編碼自然語言運作方式的機器學習模型，可支援多種自然語言處理任務，例如文字生成、自動摘要、機器翻譯、分類。通常需要大量資料與運算資源建置。</p>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.29</span><span class="en">generative artificial intelligence (generative AI)</span><span class="zh">生成式 AI</span></div>
+    <p>標準以學科角度定義：研究並開發生成式 AI 系統的機制、方法與應用。附註說明它是 AI 的子學科。</p>
+  </div>
+  <div class="term">
+    <div class="term-head"><span class="no">3.30</span><span class="en">trusted execution environment (TEE)</span><span class="zh">可信執行環境</span></div>
+    <p>與裝置主作業系統並行運作、但相互隔離的執行環境。</p>
+    <div class="src">出處：ISO/IEC 27071:2023, 3.3.15</div>
+    <div class="use">第 5 章目錄有「Zero trust principles」，TEE 屬於後續保護模型與資料的典型技術。條文內容未公開，此處是預覽可見範圍內的推測，尚未驗證。</div>
+  </div>
+</section>
+
+<section id="insights">
+  <h2>閱讀心得：看術語能讀出的三件事</h2>
+  <h3>1. 「直接」與「間接」是兩條路</h3>
+  <p>3.18「直接模型中毒」、3.19「直接模型竊取」、3.20「直接訓練資料洩漏」都冠上 direct；對照 3.13 資料中毒、3.16 模型萃取、3.17 模型反轉、3.22 敏感輸出，則是繞一圈，透過資料或查詢達成目的。這個區分提醒防守者：<strong>保護模型檔案本身，和保護查詢介面，是兩套不同的控制</strong>。</p>
+  <h3>2. 標準把「失效」和「攻擊」分開</h3>
+  <p>3.7 failure 是一般品質概念，3.5 attack 才是帶惡意的行為。AI 出錯不一定是被攻擊，像 3.26 的分布外資料就是自然發生。分析事故時要先分辨，不能把每個錯誤都當成攻擊。</p>
+  <h3>3. 有些定義是借用傳統資安的</h3>
+  <p>3.1 至 3.9 及 3.24、3.30 都引自既有標準（27000、27002、27033-1、22300、27071 等）。這呼應序言的立場：AI 威脅是在傳統資安之上加一層，而不是另起爐灶。</p>
+  <div class="callout"><strong>與本專案報告的對照提醒：</strong>報告用「提示詞注入」「成員推斷」「模型反轉」等詞，與第 3 章的用語一致；報告中「模型後門」若指訓練時植入觸發器的那種，則 3.24 並未涵蓋這個意義，引用時請注意區分。</div>
+</section>
+
+<section id="notice">
+  <h2>範圍與聲明</h2>
+  <ul>
+    <li><strong>資料來源</strong>：ISO 官方 Online Browsing Platform（OBP）上公開的 Foreword、Introduction、第 1 至 3 章與 Bibliography。2026-10-17 讀取。</li>
+    <li><strong>不含</strong>：第 4 章起的條文、威脅與緩解細節、附錄。這些為付費內容，OBP 預覽未開放，本頁完全沒有涉及。</li>
+    <li><strong>意譯，非逐字轉載</strong>：各條說明為作者以繁體中文重寫的白話版本，並非 ISO 官方翻譯，也非原文；用語若有出入，以官方英文版為準。需要精確用字時，請至 OBP 或購買正式版本查閱。</li>
+    <li><strong>「大致相當於」與「用途」欄</strong>：為作者個人的解讀與整理，不屬於標準內容。</li>
+    <li><strong>連結</strong>：<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:27090:ed-1:v1:en">ISO OBP 官方預覽頁</a></li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  <p>ISO/IEC 27090:2026 術語對照與導讀 · 非官方資料，僅供學習與研究參考。</p>
+</footer>
+
+<script>
+  (function () {
+    var q = document.getElementById('q');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.term'));
+    var count = document.getElementById('count');
+    q.addEventListener('input', function () {
+      var k = q.value.trim().toLowerCase();
+      var n = 0;
+      cards.forEach(function (c) {
+        var show = !k || c.textContent.toLowerCase().indexOf(k) !== -1;
+        c.hidden = !show;
+        if (show) n++;
+      });
+      count.textContent = '顯示 ' + n + ' / ' + cards.length + ' 條';
+    });
+  })();
+</script>
+</body>
+</html>
